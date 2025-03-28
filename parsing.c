@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:48:30 by jhapke            #+#    #+#             */
-/*   Updated: 2025/03/26 11:18:36 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/03/27 08:56:08 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_mem_allocation(t_map *map)
 	map->points = malloc(map->ymax * sizeof(t_point *));
 	if (!map->points)
 		return ;
-	while (i < map->xmax)
+	while (i < map->ymax)
 	{
 		map->points[i] = malloc(map->xmax * sizeof(t_point));
 		if (map->points[i] == '\0')
