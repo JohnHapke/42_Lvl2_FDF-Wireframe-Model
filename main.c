@@ -6,8 +6,44 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:34:38 by jhapke            #+#    #+#             */
-/*   Updated: 2025/03/26 11:34:48 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/04 11:11:09 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_prep_handler(char **argv, t_mlx_data *data)
+{
+	data->map = ft_calloc(1, sizeof(t_map));
+	if (!data->map)
+		error_handler(data, 0);
+	ft_pars_handler(argv, data->map);
+	data->iso = ft_calloc(1, sizeof(t_isometric));
+	if (!data->iso)
+		error_handler(data, 1);
+	ft_to_isometric(data->map, data->iso);
+	data->lines = ft_algorithm_handler(data->map, data->iso);
+	if (!data->lines)
+		error_handler(data, 2);
+}
+
+int	main(int argc, char **argv)
+{
+	t_mlx_data	*data;
+
+	if (argc != 2)
+		error_handler(NULL, 0);
+	data = ft_calloc(1, sizeof(t_mlx_data));
+	if (!data)
+		error_handler(NULL, 0);
+	ft_prep_handler(argv, data);
+	data->mlx = mlx_init(800, 600, "FDF", false);
+	if (!data->mlx)
+		error_handler(data, 3);
+	data->image = mlx_new_image(data->mlx, 800, 600);
+	if (!data->image)
+		error_handler(data, 3);
+	ft_mlx_handler(data);
+	mlx_terminate(data->mlx);
+	return (0);
+}
