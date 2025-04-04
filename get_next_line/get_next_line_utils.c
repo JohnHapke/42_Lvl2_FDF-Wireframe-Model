@@ -6,23 +6,13 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:46:43 by jhapke            #+#    #+#             */
-/*   Updated: 2025/01/17 09:10:43 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/04 12:02:34 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-ssize_t	ft_strlen(char *str)
-{
-	ssize_t	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	ssize_t	i;
 	ssize_t	j;
@@ -50,7 +40,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-char	*ft_strchr(char *str, int c)
+char	*ft_strchr_gnl(char *str, int c)
 {
 	ssize_t	i;
 

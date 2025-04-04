@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:45:39 by jhapke            #+#    #+#             */
-/*   Updated: 2025/01/24 11:19:29 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/04 12:02:36 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_buffer(int fd, char *str)
 	if (!buffer)
 		return (NULL);
 	len_read = 1;
-	while (!(ft_strchr(str, '\n')) && len_read > 0)
+	while (!(ft_strchr_gnl(str, '\n')) && len_read > 0)
 	{
 		len_read = read(fd, buffer, BUFFER_SIZE);
 		if (len_read == -1)
@@ -30,7 +30,7 @@ char	*ft_buffer(int fd, char *str)
 			return (NULL);
 		}
 		buffer[len_read] = '\0';
-		str = ft_strjoin(str, buffer);
+		str = ft_strjoin_gnl(str, buffer);
 	}
 	free(buffer);
 	return (str);
