@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 09:02:15 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/04 11:56:57 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/07 10:37:41 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,14 @@ void	ft_mlx_image(t_mlx_data *data, int i, int j)
 {
 	int	x;
 	int	y;
-	int	scale;
 	int	offset_x;
 	int	offset_y;
 
-	scale = 40;
-	offset_x = 400;
-	offset_y = 300;
-	x = (data->lines[i]->line[j].x * scale) + offset_x;
-	y = (data->lines[i]->line[j].y * scale) + offset_y;
-	if (x >= 0 && x <= 800 && y >= 0 && y <= 600)
+	offset_x = 800;
+	offset_y = 600;
+	x = data->lines[i]->line[j].x + (offset_x / 2);
+	y = data->lines[i]->line[j].y + (offset_y / 2);
+	if (x >= 0 && x < offset_x && y >= 0 && y < offset_y)
 		mlx_put_pixel(data->image, x, y, 0xFFFFFFFF);
 }
 
@@ -62,16 +60,12 @@ void	ft_mlx_handler(t_mlx_data *data)
 		if (data->lines[i])
 		{
 			size = abs(data->lines[i]->dy);
-			if (data->lines[i]->dx > size)
-				size = abs(data->lines[i]->dx);
+			if (abs((data->lines[i]->dx)) > size)
+				size = abs((int)data->lines[i]->dx);
 		}
 		j = -1;
 		while (++j <= size)
-		{
 			ft_mlx_image(data, i, j);
-			printf("Line %d, Punkt %d: x=%d, y=%d\n", i, j, 
-				data->lines[i]->line[j].x, data->lines[i]->line[j].y);
-		}
 	}
 	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
 		error_handler(data, 3);

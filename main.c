@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:34:38 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/04 11:11:09 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/07 10:24:33 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_prep_handler(char **argv, t_mlx_data *data)
 	data->lines = ft_algorithm_handler(data->map, data->iso);
 	if (!data->lines)
 		error_handler(data, 2);
+	ft_center_map(data->map, data->iso);
 }
 
 int	main(int argc, char **argv)

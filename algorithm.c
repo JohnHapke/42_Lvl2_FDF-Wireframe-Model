@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:34:13 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/04 11:52:14 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/07 10:45:01 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_algorithm_xcalc(t_line_data *data)
 {
 	int	er;
-	int		i;
+	int	i;
 
 	i = -1;
 	data->x_step = -1;
@@ -25,7 +25,7 @@ void	ft_algorithm_xcalc(t_line_data *data)
 	if (data->dy >= 0)
 		data->y_step = 1;
 	er = 2 * abs(data->dx) - abs(data->dy);
-	while (++i < abs(data->dx))
+	while (++i < abs((data->dx)))
 	{
 		er -= 2 * abs(data->dy);
 		data->line[i + 1].x = data->line[i].x + data->x_step;
@@ -36,14 +36,13 @@ void	ft_algorithm_xcalc(t_line_data *data)
 		}
 		else
 			data->line[i + 1].y = data->line[i].y;
-		printf("X-Line Punkt %d: x=%d, y=%d\n", i + 1, data->line[i + 1].x, data->line[i + 1].y);
 	}
 }
 
 void	ft_algorithm_ycalc(t_line_data *data)
 {
-	float	er;
-	int		i;
+	int	er;
+	int	i;
 
 	i = -1;
 	data->x_step = -1;
@@ -55,7 +54,7 @@ void	ft_algorithm_ycalc(t_line_data *data)
 	er = 2 * abs(data->dx) - abs(data->dy);
 	while (++i < abs(data->dy))
 	{
-		er -= 2 * abs(data->dy);
+		er -= 2 * abs(data->dx);
 		data->line[i + 1].y = data->line[i].y + data->y_step;
 		if (er < 0)
 		{
@@ -64,7 +63,6 @@ void	ft_algorithm_ycalc(t_line_data *data)
 		}
 		else
 			data->line[i + 1].x = data->line[i].x;
-		printf("Y-Line Punkt %d: x=%d, y=%d\n", i + 1, data->line[i + 1].x, data->line[i + 1].y);
 	}
 }
 
@@ -75,8 +73,10 @@ void	ft_algorithm_row(t_line_data **data, t_isometric *iso, int i, int j)
 	*data = malloc(sizeof(t_line_data));
 	if (!*data)
 		return ;
-	(*data)->dy = iso->isometric[i][j + 1].y - iso->isometric[i][j].y;
-	(*data)->dx = iso->isometric[i][j + 1].x - iso->isometric[i][j].x;
+	(*data)->dy = (int)round(iso->isometric[i][j + 1].y
+			- iso->isometric[i][j].y);
+	(*data)->dx = (int)round(iso->isometric[i][j + 1].x
+			- iso->isometric[i][j].x);
 	size = abs((*data)->dy);
 	if (abs((*data)->dx) > size)
 		size = abs((*data)->dx);
@@ -87,8 +87,8 @@ void	ft_algorithm_row(t_line_data **data, t_isometric *iso, int i, int j)
 		*data = NULL;
 		return ;
 	}
-	(*data)->line[0].x = iso->isometric[i][j].x;
-	(*data)->line[0].y = iso->isometric[i][j].y;
+	(*data)->line[0].x = (int)round(iso->isometric[i][j].x);
+	(*data)->line[0].y = (int)round(iso->isometric[i][j].y);
 	if (abs((*data)->dx) > abs((*data)->dy))
 		ft_algorithm_xcalc((*data));
 	else
@@ -102,8 +102,10 @@ void	ft_algorithm_col(t_line_data **data, t_isometric *iso, int i, int j)
 	*data = malloc(sizeof(t_line_data));
 	if (!(*data))
 		return ;
-	(*data)->dy = iso->isometric[i + 1][j].y - iso->isometric[i][j].y;
-	(*data)->dx = iso->isometric[i + 1][j].x - iso->isometric[i][j].x;
+	(*data)->dy = (int)round(iso->isometric[i + 1][j].y
+			- iso->isometric[i][j].y);
+	(*data)->dx = (int)round(iso->isometric[i + 1][j].x
+			- iso->isometric[i][j].x);
 	size = abs((*data)->dy);
 	if (abs((*data)->dx) > size)
 		size = abs((*data)->dx);
@@ -114,31 +116,12 @@ void	ft_algorithm_col(t_line_data **data, t_isometric *iso, int i, int j)
 		*data = NULL;
 		return ;
 	}
-	(*data)->line[0].y = iso->isometric[i][j].y;
-	(*data)->line[0].x = iso->isometric[i][j].x;
+	(*data)->line[0].y = (int)round(iso->isometric[i][j].y);
+	(*data)->line[0].x = (int)round(iso->isometric[i][j].x);
 	if (abs((*data)->dx) > abs((*data)->dy))
 		ft_algorithm_xcalc((*data));
 	else
 		ft_algorithm_ycalc((*data));
-}
-
-void	ft_lines_free(t_line_data **lines, int line_count)
-{
-	int	i;
-
-	i = -1;
-	if (!lines)
-		return ;
-	while (++i < line_count)
-	{
-		if (lines[i])
-		{
-			if (lines[i]->line)
-				free(lines[i]->line);
-			free(lines[i]);
-		}
-	}
-	free(lines);
 }
 
 t_line_data	**ft_algorithm_handler(t_map *map, t_isometric *iso)
