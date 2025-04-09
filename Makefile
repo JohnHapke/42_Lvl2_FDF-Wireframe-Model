@@ -6,7 +6,7 @@
 #    By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 10:08:43 by jhapke            #+#    #+#              #
-#    Updated: 2025/04/07 10:46:34 by jhapke           ###   ########.fr        #
+#    Updated: 2025/04/08 14:27:10 by jhapke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SOURCE =	algorithm.c\
 		mlx_management.c\
 		parsing.c\
 		memory.c\
+		visual.c\
 
 GNL_DIR = get_next_line
 GNL_SRC = $(GNL_DIR)/get_next_line.c\

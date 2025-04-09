@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:15:30 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/07 10:36:21 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/09 11:29:08 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_point
 {
 	float	x;
 	float	y;
-	int		z;
+	float	z;
 }	t_point;
 
 typedef struct s_map
@@ -36,6 +36,8 @@ typedef struct s_map
 	t_point	**points;
 	int		xmax;
 	int		ymax;
+	int		zmin;
+	int		zmax;
 }	t_map;
 
 typedef struct s_line_data
@@ -45,6 +47,7 @@ typedef struct s_line_data
 	int		dy;
 	int		y_step;
 	int		x_step;
+	int		size;
 }	t_line_data;
 
 typedef struct s_isometric
@@ -59,6 +62,9 @@ typedef struct s_mlx_data
 	t_line_data	**lines;
 	mlx_t		*mlx;
 	mlx_image_t	*image;
+	int			offset_x;
+	int			offset_y;
+	float		scale;
 }	t_mlx_data;
 
 // parsing
@@ -66,6 +72,7 @@ void		ft_pars_handler(char **argv, t_map *map);
 void		ft_pars_array_counter(int fds, t_map *map);
 void		ft_pars_mem_allocation(t_map *map);
 void		ft_pars_fdf_file(int fds, t_map *map);//memory free prüfen
+void		ft_find_z_range(t_map *maps);
 
 // memory liberation & error checking
 void		ft_free(char **ar);
@@ -79,6 +86,7 @@ void		ft_key_callback(mlx_key_data_t keydata, void *param);
 void		ft_close_callback(void *param);
 void		ft_mlx_handler(t_mlx_data *data);
 void		ft_mlx_image(t_mlx_data *data, int i, int j);
+void		ft_mlx_render(t_mlx_data *data);
 
 // algorithm
 void		ft_algorithm_xcalc(t_line_data *data);
@@ -96,6 +104,11 @@ t_line_data	**ft_algorithm_m(t_map *map, t_isometric *iso,
 void		ft_to_isometric(t_map *map, t_isometric *iso);
 void		ft_isometric_calc(t_map *map, t_isometric *iso, int i);
 void		ft_center_map(t_map *map, t_isometric *iso);
+
+//visual
+void		ft_offset_map(t_map *map, t_isometric *iso, double border[4]);
+void		ft_center_map(t_map *map, t_isometric *iso);
+uint32_t	ft_get_color_by_height(float z, t_map *maps);
 
 //main
 void		ft_prep_handler(char **argv, t_mlx_data *data);

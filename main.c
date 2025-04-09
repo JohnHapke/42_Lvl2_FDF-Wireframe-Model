@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:34:38 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/07 10:24:33 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/09 11:29:53 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int	main(int argc, char **argv)
 	data->image = mlx_new_image(data->mlx, 800, 600);
 	if (!data->image)
 		error_handler(data, 3);
+	data->offset_x = 0;
+	data->offset_y = 0;
+	data->scale = 1.0f;
 	ft_mlx_handler(data);
 	mlx_terminate(data->mlx);
 	return (0);
