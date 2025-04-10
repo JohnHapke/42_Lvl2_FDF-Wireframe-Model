@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:50:01 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/08 15:03:44 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/10 12:09:34 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,32 @@ void	ft_pars_handler(char **argv, t_map *map)
 	close(fds);
 	fds = open(argv[1], O_RDONLY);
 	if (fds < 0)
-	{
-		free_map(map, NULL);
 		error_handler(NULL, 0);
-	}
 	ft_pars_fdf_file(fds, map);
 	close(fds);
+	ft_control_map(map);
 	ft_find_z_range(map);
+}
+
+void	ft_control_map(t_map *map)
+{
+	int	i;
+	int	j;
+	int	temp;
+
+	i = -1;
+	while (++i <= map->ymax)
+	{
+		j = 0;
+		while (j <= map->xmax)
+			j++;
+		if (i == 0)
+			temp = j;
+		if (temp == j)
+			i++;
+		else
+			error_handler(NULL, 0);
+	}
 }
 
 void	ft_pars_array_counter(int fds, t_map *map)

@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:34:13 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/09 09:16:45 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/10 11:48:23 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_algorithm_row(t_line_data **data, t_isometric *iso, int i, int j)
 {
 	*data = malloc(sizeof(t_line_data));
 	if (!*data)
-		return ;
+		error_handler(NULL, 2);
 	(*data)->dy = (int)round(iso->isometric[i][j + 1].y
 			- iso->isometric[i][j].y);
 	(*data)->dx = (int)round(iso->isometric[i][j + 1].x
@@ -84,11 +84,7 @@ void	ft_algorithm_row(t_line_data **data, t_isometric *iso, int i, int j)
 		(*data)->size = abs((*data)->dx);
 	(*data)->line = malloc(((*data)->size + 1) * sizeof(t_point));
 	if (!(*data)->line)
-	{
-		free(*data);
-		*data = NULL;
-		return ;
-	}
+		error_handler(NULL, 2);
 	(*data)->line[0].x = (int)round(iso->isometric[i][j].x);
 	(*data)->line[0].y = (int)round(iso->isometric[i][j].y);
 	(*data)->line[0].z = iso->isometric[i][j].z;
@@ -103,7 +99,7 @@ void	ft_algorithm_col(t_line_data **data, t_isometric *iso, int i, int j)
 {
 	*data = malloc(sizeof(t_line_data));
 	if (!(*data))
-		return ;
+		error_handler(NULL, 2);
 	(*data)->dy = (int)round(iso->isometric[i + 1][j].y
 			- iso->isometric[i][j].y);
 	(*data)->dx = (int)round(iso->isometric[i + 1][j].x
@@ -113,11 +109,7 @@ void	ft_algorithm_col(t_line_data **data, t_isometric *iso, int i, int j)
 		(*data)->size = abs((*data)->dx);
 	(*data)->line = malloc(((*data)->size + 1) * sizeof(t_point));
 	if (!((*data)->line))
-	{
-		free(*data);
-		*data = NULL;
-		return ;
-	}
+		error_handler(NULL, 2);
 	(*data)->line[0].y = (int)round(iso->isometric[i][j].y);
 	(*data)->line[0].x = (int)round(iso->isometric[i][j].x);
 	(*data)->line[0].z = iso->isometric[i][j].z;
@@ -137,18 +129,12 @@ t_line_data	**ft_algorithm_handler(t_map *map, t_isometric *iso)
 	line_count = (map->xmax - 1) * (map->ymax) + (map->xmax) * (map->ymax - 1);
 	lines = ft_calloc(line_count, sizeof(t_line_data *));
 	if (!lines)
-	{
 		error_handler(NULL, 2);
-		return (NULL);
-	}
 	i = -1;
 	while (++i < line_count)
 		lines[i] = NULL;
 	if (!ft_algorithm_m(map, iso, lines, 0))
-	{
-		return (NULL);
-		ft_lines_free(lines, line_count);
-	}
+		error_handler(NULL, 2);
 	return (lines);
 }
 
@@ -166,22 +152,14 @@ t_line_data	**ft_algorithm_m(t_map *map, t_isometric *iso, t_line_data **lines, 
 			if (j < map->xmax - 1)
 			{
 				ft_algorithm_row(&lines[line_count], iso, i, j);
-				if (!lines[line_count])
-				{
-					ft_lines_free(lines, line_count);
+				if (!lines[line_count++])
 					error_handler(NULL, 2);
-				}
-				line_count++;
 			}
 			if (i < map->ymax - 1)
 			{
 				ft_algorithm_col(&lines[line_count], iso, i, j);
-				if (!lines[line_count])
-				{
-					ft_lines_free(lines, line_count);
+				if (!lines[line_count++])
 					error_handler(NULL, 2);
-				}
-				line_count++;
 			}
 		}
 	}
