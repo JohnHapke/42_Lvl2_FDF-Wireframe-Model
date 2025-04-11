@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 09:02:15 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/10 12:10:04 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/11 09:20:54 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_mlx_render(t_mlx_data *data)
 
 	line_count = (data->map->xmax - 1) * (data->map->ymax)
 		+ (data->map->xmax) * (data->map->ymax - 1);
-	memset(data->image->pixels, 0, data->image->width
+	ft_memset(data->image->pixels, 0, data->image->width
 		* data->image->height * sizeof(uint32_t));
 	i = -1;
 	while (++i < line_count)
@@ -99,7 +99,7 @@ void	ft_mlx_handler(t_mlx_data *data)
 {
 	ft_mlx_render(data);
 	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
-		error_handler(data, 3);
+		error_handler(data, ERROR_MLX_INIT);
 	mlx_key_hook(data->mlx, &ft_key_callback, data);
 	mlx_close_hook(data->mlx, &ft_close_callback, data);
 	mlx_loop(data->mlx);

@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:15:30 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/10 12:09:50 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/11 09:38:12 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,18 @@ typedef struct s_mlx_data
 	float		scale;
 }	t_mlx_data;
 
+typedef enum e_error_code
+{
+	ERROR_USAGE = 0,
+	ERROR_PARSING,
+	ERROR_ISOMETRIC_ALLOC,
+	ERROR_BRESENHAM,
+	ERROR_MLX_INIT,
+	ERROR_MEMORY_ALLOC,
+	ERROR_OPEN,
+	ERROR_CLOSE
+}	t_error_code;
+
 // parsing
 void		ft_pars_handler(char **argv, t_map *map);
 void		ft_pars_array_counter(int fds, t_map *map);
@@ -76,12 +88,12 @@ void		ft_find_z_range(t_map *maps);
 
 // memory liberation & error checking
 void		ft_free(char **ar);
-void		error_handler(t_mlx_data *data, int i);
+void		error_handler(t_mlx_data *data, t_error_code code);
 void		free_map(t_map	*map, t_isometric *iso);
 void		free_wires(t_map *map, t_line_data **lines);
 void		cleanup(t_mlx_data *data);
 void		ft_lines_free(t_line_data **lines, int line_count);
-void		ft_control_map(t_map *map);
+void		ft_control_map(t_map *map, char **value);
 
 //mlx_management
 void		ft_key_callback(mlx_key_data_t keydata, void *param);

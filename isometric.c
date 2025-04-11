@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:19:57 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/10 11:50:09 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/11 09:16:07 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void	ft_to_isometric(t_map *map, t_isometric *iso)
 	i = -1;
 	iso->isometric = ft_calloc(map->ymax, sizeof(t_point *));
 	if (!iso->isometric)
-		error_handler(NULL, 1);
+		error_handler(NULL, ERROR_ISOMETRIC_ALLOC);
 	while (++i < (map)->ymax)
 	{
 		iso->isometric[i] = malloc(map->xmax * sizeof(t_point));
 		if (!(iso->isometric[i]))
-			error_handler(NULL, 1);
+			error_handler(NULL, ERROR_ISOMETRIC_ALLOC);
 		ft_isometric_calc(map, iso, i);
 	}
 }

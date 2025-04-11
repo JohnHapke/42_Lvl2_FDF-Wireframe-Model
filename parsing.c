@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:50:01 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/10 12:09:34 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/04/11 10:13:17 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,19 @@ void	ft_pars_handler(char **argv, t_map *map)
 
 	fds = open(argv[1], O_RDONLY);
 	if (fds < 0)
-		error_handler(NULL, 0);
+		error_handler(NULL, ERROR_OPEN);
 	ft_pars_array_counter(fds, map);
 	close(fds);
+	if (fds < 0)
+		error_handler(NULL, ERROR_CLOSE);
 	fds = open(argv[1], O_RDONLY);
 	if (fds < 0)
-		error_handler(NULL, 0);
+		error_handler(NULL, ERROR_OPEN);
 	ft_pars_fdf_file(fds, map);
 	close(fds);
-	ft_control_map(map);
+	if (fds < 0)
+		error_handler(NULL, ERROR_CLOSE);
 	ft_find_z_range(map);
-}
-
-void	ft_control_map(t_map *map)
-{
-	int	i;
-	int	j;
-	int	temp;
-
-	i = -1;
-	while (++i <= map->ymax)
-	{
-		j = 0;
-		while (j <= map->xmax)
-			j++;
-		if (i == 0)
-			temp = j;
-		if (temp == j)
-			i++;
-		else
-			error_handler(NULL, 0);
-	}
 }
 
 void	ft_pars_array_counter(int fds, t_map *map)
@@ -64,12 +46,18 @@ void	ft_pars_array_counter(int fds, t_map *map)
 		if (!line)
 			break ;
 		value = ft_split(line, ' ');
-		while (map->ymax == 0 && value[map->xmax] != NULL)
-			map->xmax++;
+		if (!value)
+		{
+			free(line);
+			error_handler(NULL, ERROR_PARSING);
+		}
+		ft_control_map(map, value);
 		free(line);
 		ft_free(value);
 		map->ymax++;
 	}
+	if (map->ymax == 0 || map->xmax == 0)
+		error_handler(NULL, ERROR_PARSING);
 	ft_pars_mem_allocation(map);
 }
 
@@ -80,7 +68,7 @@ void	ft_pars_mem_allocation(t_map *map)
 	i = -1;
 	map->points = ft_calloc(map->ymax, sizeof(t_point *));
 	if (!map->points)
-		error_handler(0, 0);
+		error_handler(NULL, ERROR_MEMORY_ALLOC);
 	while (++i < map->ymax)
 	{
 		map->points[i] = ft_calloc(map->xmax, sizeof(t_point));
@@ -90,7 +78,7 @@ void	ft_pars_mem_allocation(t_map *map)
 				free(map->points[i]);
 			free(map->points);
 			map->points = NULL;
-			error_handler(NULL, 0);
+			error_handler(NULL, ERROR_MEMORY_ALLOC);
 		}
 	}
 }
@@ -109,7 +97,7 @@ void	ft_pars_fdf_file(int fds, t_map *map)
 		if (!line)
 		{
 			free_map(map, NULL);
-			error_handler(NULL, 0);
+			error_handler(NULL, ERROR_PARSING);
 		}
 		value = ft_split(line, ' ');
 		j = -1;

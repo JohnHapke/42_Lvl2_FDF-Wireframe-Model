@@ -6,13 +6,14 @@
 #    By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 10:08:43 by jhapke            #+#    #+#              #
-#    Updated: 2025/04/08 14:27:10 by jhapke           ###   ########.fr        #
+#    Updated: 2025/04/11 10:12:45 by jhapke           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-SOURCE =	algorithm.c\
+SOURCE =	handling_algorithm.c\
+		Bresenham_algorithm.c\
 		isometric.c\
 		main.c\
 		errors.c\
@@ -45,7 +46,7 @@ INCLUDES = -I. -I$(LIBFT_DIR) -I$(GNL_DIR) -I$(MLX42_DIR)/include
 
 all: $(MLX42_A) $(LIBFT_A) $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_A) $(MLX42_A)
+$(NAME): $(OBJS) $(LIBFT_A) $(MLX42_A) $(HEADER)
 	$(CC) $(FLAGS) $(OBJS) $(LIBFT_A) $(MLX42_A) -o $(NAME) $(MLX42_FLAGS)
 
 %.o: %.c $(HEADER) $(GNL_HEADER) $(LIBFT_H)
