@@ -80,4 +80,4 @@ Note: Bonuses are only evaluated if the mandatory part is fully functional and e
 
 ## Grade
 
-[TBD] / 100
+115 / 100
