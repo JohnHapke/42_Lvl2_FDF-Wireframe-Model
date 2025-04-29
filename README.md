@@ -78,6 +78,4 @@ Note: Bonuses are only evaluated if the mandatory part is fully functional and e
 **User Interaction:** Enables dynamic model manipulation like zooming and rotating (bonus).<br>
 **Customization:** Adds optional features like color gradients for visual enhancement (bonus).<br>
 
-## Grade
-
-115 / 100
+## Grade 115 / 100
