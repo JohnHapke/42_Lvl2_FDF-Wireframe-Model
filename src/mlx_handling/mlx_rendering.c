@@ -1,51 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_management.c                                   :+:      :+:    :+:   */
+/*   mlx_rendering.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 09:02:15 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/11 09:20:54 by jhapke           ###   ########.fr       */
+/*   Created: 2025/06/15 15:30:06 by jhapke            #+#    #+#             */
+/*   Updated: 2025/06/15 15:30:23 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	ft_key_callback(mlx_key_data_t keydata, void *param)
-{
-	t_mlx_data	*data;
-	int			move_step;
-	float		scale_step;
-
-	move_step = 10;
-	scale_step = 0.1f;
-	data = (t_mlx_data *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(data->mlx);
-	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
-		data->offset_x -= move_step;
-	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
-		data->offset_x += move_step;
-	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
-		data->offset_y -= move_step;
-	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
-		data->offset_y += move_step;
-	if (keydata.key == MLX_KEY_KP_ADD || keydata.key == MLX_KEY_EQUAL)
-		data->scale += scale_step;
-	if (keydata.key == MLX_KEY_KP_SUBTRACT || keydata.key == MLX_KEY_MINUS)
-		data->scale -= scale_step;
-	ft_mlx_render(data);
-}
-
-void	ft_close_callback(void *param)
-{
-	t_mlx_data	*data;
-
-	data = (t_mlx_data *)param;
-	cleanup(data);
-	exit(0);
-}
 
 void	ft_mlx_image(t_mlx_data *data, int i, int j)
 {
@@ -93,14 +58,4 @@ void	ft_mlx_render(t_mlx_data *data)
 				ft_mlx_image(data, i, j);
 		}
 	}
-}
-
-void	ft_mlx_handler(t_mlx_data *data)
-{
-	ft_mlx_render(data);
-	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
-		error_handler(data, ERROR_MLX_INIT);
-	mlx_key_hook(data->mlx, &ft_key_callback, data);
-	mlx_close_hook(data->mlx, &ft_close_callback, data);
-	mlx_loop(data->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:15:30 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/11 09:38:12 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:28:05 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <math.h>
 # include <MLX42/MLX42.h>
 # include <MLX42/MLX42_Int.h>
-# include "libft/libft.h"
-# include "get_next_line/get_next_line.h"
+# include "libft.h"
+# include "get_next_line.h"
 
 # define MY_PI 3.14159265359
 
@@ -80,18 +80,18 @@ typedef enum e_error_code
 }	t_error_code;
 
 // parsing
-void		ft_pars_handler(char **argv, t_map *map);
-void		ft_pars_array_counter(int fds, t_map *map);
-void		ft_pars_mem_allocation(t_map *map);
-void		ft_pars_fdf_file(int fds, t_map *map);
+void		ft_parsing_handler(char **argv, t_map *map);
+void		ft_parse_array_counter(int fds, t_map *map);
+void		ft_parse_mem_allocation(t_map *map);
+void		ft_parse_fdf_file(int fds, t_map *map);
 void		ft_find_z_range(t_map *maps);
 
 // memory liberation & error checking
 void		ft_free(char **ar);
-void		error_handler(t_mlx_data *data, t_error_code code);
-void		free_map(t_map	*map, t_isometric *iso);
-void		free_wires(t_map *map, t_line_data **lines);
-void		cleanup(t_mlx_data *data);
+void		ft_error_handler(t_mlx_data *data, t_error_code code);
+void		ft_free_map(t_map	*map, t_isometric *iso);
+void		ft_free_wires(t_map *map, t_line_data **lines);
+void		ft_cleanup(t_mlx_data *data);
 void		ft_lines_free(t_line_data **lines, int line_count);
 void		ft_control_map(t_map *map, char **value);
 
@@ -124,8 +124,5 @@ void		ft_offset_map(t_map *map, t_isometric *iso, double border[4]);
 void		ft_center_map(t_map *map, t_isometric *iso);
 uint32_t	ft_get_color_by_height(float z, t_map *maps);
 uint32_t	fix_endianness(uint32_t color);
-
-//main
-void		ft_prep_handler(char **argv, t_mlx_data *data);
 
 #endif

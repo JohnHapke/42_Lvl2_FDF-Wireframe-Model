@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 10:42:49 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/07 10:43:26 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/06/15 15:17:19 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_free(char **ar)
 	free(ar);
 }
 
-void	free_map(t_map	*map, t_isometric *iso)
+void	ft_free_map(t_map	*map, t_isometric *iso)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ void	free_map(t_map	*map, t_isometric *iso)
 	}
 }
 
-void	free_wires(t_map *map, t_line_data **lines)
+void	ft_free_wires(t_map *map, t_line_data **lines)
 {
 	int	i;
 	int	lines_count;

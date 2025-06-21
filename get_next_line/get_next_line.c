@@ -6,7 +6,7 @@
 /*   By: jhapke <jhapke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:45:39 by jhapke            #+#    #+#             */
-/*   Updated: 2025/04/04 12:02:36 by jhapke           ###   ########.fr       */
+/*   Updated: 2025/06/15 15:39:37 by jhapke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_buffer(int fd, char *str)
 	return (str);
 }
 
-char	*line_extract(char *buffer)
+char	*ft_line_extract(char *buffer)
 {
 	ssize_t	i;
 	char	*line;
@@ -64,7 +64,7 @@ char	*line_extract(char *buffer)
 	return (line);
 }
 
-char	*save_remainder(char *buffer)
+char	*ft_save_remainder(char *buffer)
 {
 	char	*remainder;
 	ssize_t	i;
@@ -91,7 +91,7 @@ char	*save_remainder(char *buffer)
 	return (remainder);
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd)
 {
 	char		*line;
 	static char	*str;
@@ -105,7 +105,7 @@ char	*get_next_line(int fd)
 	str = ft_buffer(fd, str);
 	if (!str)
 		return (NULL);
-	line = line_extract(str);
-	str = save_remainder(str);
+	line = ft_line_extract(str);
+	str = ft_save_remainder(str);
 	return (line);
 }
